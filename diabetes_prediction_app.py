@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 # Load the trained model
-model = pickle.load(open('diabetes_model.sav', 'rb'))
+model = pickle.load(open('diabetes_model.pkl', 'rb'))
 
 # Streamlit UI
 st.title("Diabetes Prediction App")
