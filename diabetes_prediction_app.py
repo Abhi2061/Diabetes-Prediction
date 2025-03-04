@@ -2,7 +2,8 @@ import streamlit as st
 import pickle
 import numpy as np
 
-# Load the trained model
+# Load the scaling model and trained model
+sc = pickle.load(open('scaling.pkl', 'rb'))
 model = pickle.load(open('diabetes_model.pkl', 'rb'))
 
 # Streamlit UI
@@ -22,7 +23,8 @@ age = st.number_input("Age", min_value=0, max_value=120, value=30, step=1)
 # Prediction
 if st.button("Predict"):
     input_data = np.array([[pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree, age]])
-    prediction = model.predict(input_data)
+    scaled_input_data = sc.transform(input_data)
+    prediction = model.predict(scaled_input_data)
     result = "Diabetic" if prediction[0] == 1 else "Non-Diabetic"
     
     st.subheader("Prediction Result")
