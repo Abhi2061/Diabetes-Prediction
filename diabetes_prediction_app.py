@@ -14,6 +14,9 @@ with open("diabetes_model_log.pkl", "rb") as model_file:
 
 # Streamlit UI
 st.title("Diabetes Prediction App")
+
+ch = st.radio("Select the ML model", ["KNN", "Logistic Regression"])
+
 st.write("Enter the details below to predict whether a person has diabetes or not.")
 
 # Input fields
@@ -30,9 +33,15 @@ age = st.number_input("Age", min_value=0, max_value=120, value=30, step=1)
 if st.button("Predict"):
     input_data = np.array([[pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree, age]])
     scaled_input_data = sc.transform(input_data)
-    prediction = model1.predict(scaled_input_data)
+
+    if ch == "KNN":
+        st.write("KNN's Prediction")
+        prediction = model1.predict(scaled_input_data)
+    else:
+        st.write("Logistic Regression's Prediction")
+        prediction = model2.predict(scaled_input_data)
+
     result = "Diabetic" if prediction[0] == 1 else "Non-Diabetic"
     
     st.subheader("Prediction Result")
     st.success(f"The model predicts: {result}")
-
