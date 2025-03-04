@@ -3,8 +3,11 @@ import pickle
 import numpy as np
 
 # Load the scaling model and trained model
-sc = pickle.load(open('scaling.pkl', 'rb'))
-model = pickle.load(open('diabetes_model.pkl', 'rb'))
+with open("scaling.pkl", "rb") as scaling_file:
+    sc = pickle.load(scaling_file)
+
+with open("diabetes_model.pkl", "rb") as model_file:
+    model = pickle.load(model_file)
 
 # Streamlit UI
 st.title("Diabetes Prediction App")
